@@ -8,24 +8,41 @@ function App() {
   const [noteArr, setNoteArr] = useState([]);
 
   function deleteNote(key) {
-    // var newArr = [...noteArr];
-    // console.log(key)
-    // newArr = newArr.splice(key, 1);
-    // setNoteArr(newArr);
+    let newArr = [...noteArr];
+    newArr.splice(key, 1);
+    setNoteArr(newArr);
 
-    setNoteArr((prevValue) => {
-      // console.log(prevValue)
-      prevValue.splice(key, 1);
-      return [...prevValue];
-    });
+    // setNoteArr((prevValue) => {
+    //   prevValue.splice(key, 1);
+    //   return [...prevValue];
+    // });
+
+    // let newArr = [...noteArr];
+    // let resultArr = newArr.filter((value) =>
+    //   value.title != newArr[key].title
+    // )
+    // setNoteArr(resultArr);
   }
+
+  const noteList = noteArr.map((element, index) => (
+    <Note
+      key={index}
+      title={element.title}
+      content={element.content}
+      deleteNote={() => {
+        deleteNote(index);
+      }}
+    />
+  ));
+
+  // console.log(noteList);
 
   return (
     <div>
       <Header />
       <CreateArea setNoteArr={setNoteArr} />
-      <Note key={99} title="Note title" content="Note content" />
-      {noteArr.map((element, index) => (
+      {noteList}
+      {/* {noteArr.map((element, index) => (
         <Note
           key={index}
           title={element.title}
@@ -34,7 +51,7 @@ function App() {
             deleteNote(index);
           }}
         />
-      ))}
+      ))} */}
       <Footer />
     </div>
   );

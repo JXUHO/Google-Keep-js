@@ -10,10 +10,15 @@ function CreateArea(props) {
     const inputValue = event.target.value;
 
     if (event.target.name === "title") {
-      setNote((prevValue) => ({
-        ...prevValue,
-        title: inputValue
-      }));
+      // setNote((prevValue) => ({
+      //   ...prevValue,
+      //   title: inputValue
+      // }));
+
+      let temp = {...note}
+      temp.title = inputValue;
+      setNote(temp);
+
     } else if (event.target.name === "content") {
       setNote((prevValue) => ({
         ...prevValue,
@@ -23,7 +28,7 @@ function CreateArea(props) {
   }
 
   function handleClick(event) {
-    event.preventDefault();
+    event.preventDefault();  // prevent refreshing caused by form tag 
     props.setNoteArr((prevValue) => {
       return [...prevValue, note];
     });
