@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { Button, Collapse } from "react-bootstrap";
 
 function CreateArea(props) {
   const [note, setNote] = useState({
     title: "",
-    content: ""
+    content: "",
   });
+
+  const [expanded, setExpanded] = useState(false);
 
   function handleChange(event) {
     const inputValue = event.target.value;
@@ -15,43 +18,52 @@ function CreateArea(props) {
       //   title: inputValue
       // }));
 
-      let temp = {...note}
+      let temp = { ...note };
       temp.title = inputValue;
       setNote(temp);
-
     } else if (event.target.name === "content") {
       setNote((prevValue) => ({
         ...prevValue,
-        content: inputValue
+        content: inputValue,
       }));
     }
   }
 
   function handleClick(event) {
-    event.preventDefault();  // prevent refreshing caused by form tag 
+    console.log("hi");
+    event.preventDefault(); // prevent refreshing caused by form tag
     props.setNoteArr((prevValue) => {
       return [...prevValue, note];
     });
     setNote({ title: "", content: "" });
+    setExpanded(false);
+  }
+
+  function expand() {
+    setExpanded(true);
   }
 
   return (
     <div>
       <form>
-        <input
-          value={note.title}
-          onChange={handleChange}
-          name="title"
-          placeholder="Title"
-        />
+        {expanded && (
+          <input
+            value={note.title}
+            onChange={handleChange}
+            name="title"
+            placeholder="Title"
+          />
+        )}
+
         <textarea
           value={note.content}
+          onClick={expand}
           onChange={handleChange}
           name="content"
           placeholder="Take a note..."
-          rows="3"
+          rows={expanded ? "3" : "1"}
         />
-        <button onClick={handleClick}>Add</button>
+        {expanded && <button onClick={handleClick}>Add</button>}
       </form>
     </div>
   );
