@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Collapse } from "react-bootstrap";
+import { PlusLg } from 'react-bootstrap-icons';
 
 function CreateArea(props) {
   const [note, setNote] = useState({
@@ -63,7 +63,7 @@ function CreateArea(props) {
           placeholder="Take a note..."
           rows={expanded ? "3" : "1"}
         />
-        {expanded && <button onClick={handleClick}>Add</button>}
+        {expanded && <button onClick={handleClick}><PlusLg size={20}/></button>}
       </form>
     </div>
   );
